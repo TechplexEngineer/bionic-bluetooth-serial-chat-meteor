@@ -1,5 +1,7 @@
 <script>
 
+  // import Bt from '/imports/bluetooth-serial-wrapper.js'
+
   let ourName = "red1";
 
   let messages = [
@@ -27,6 +29,10 @@
 
     e.target.message.value = "";
   }
+  (async ()=>{
+    $: isConnected = await Bt.isConnected()
+    $: console.log("connected:",isConnected)
+  })()
 
 </script>
 
@@ -57,8 +63,11 @@
         </form> -->
 
         <div class="text-end">
-          <button type="button" class="btn btn-outline-light me-2">Connect</button>
+          {#if isConnected == true}
           <button type="button" class="btn btn-warning">Disconnect</button>
+          {:else}
+          <button type="button" class="btn btn-outline-light me-2">Connect</button>
+          {/if}
         </div>
       </div>
     </div>

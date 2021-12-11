@@ -1,13 +1,3 @@
-import { Meteor } from 'meteor/meteor';
-
-// import Bs from 'bootstrap';
-import 'bootstrap/dist/css/bootstrap.css';
-
-// import Bt from '../imports/bluetooth-serial-wrapper.js';
-
-import App from '../imports/ui/App.svelte';
-
-
 function stringToArrayBuffer(str) {
 	const ret = new Uint8Array(str.length);
 	for (let i = 0; i < str.length; i++) {
@@ -24,7 +14,7 @@ async function asyncExec(method, args) {
 		args = [];
 	}
 	return new Promise((success, failure) => {
-		if (window.cordova) {
+		if (cordova) {
 			cordova.exec(success, failure, PLUGIN_NAME, method, []);
 		} else {
 			// eslint-disable-next-line no-console
@@ -226,9 +216,3 @@ export default class Bt {
 	}
 }
 window.Bt = Bt;
-
-Meteor.startup(() => {
-	new App({
-		target: document.getElementById('app'),
-	});
-});

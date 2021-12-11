@@ -20,5 +20,59 @@
       "server": "server/main.js"
     },
     "testModule": "tests/main.js"
+  },
+  "devDependencies": {
+    "@babel/eslint-parser": "^7.16.3",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^8.4.1",
+    "eslint-config-airbnb": "^19.0.2",
+    "eslint-import-resolver-meteor": "^0.4.0",
+    "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-jsx-a11y": "^6.5.1",
+    "eslint-plugin-meteor": "^7.3.0",
+    "eslint-plugin-react": "^7.27.1"
+  },
+  "eslintConfig": {
+    "parser": "@babel/eslint-parser",
+    "parserOptions": {
+      "allowImportExportEverywhere": true,
+      "requireConfigFile": false
+    },
+    "env": {
+      "browser": true,
+      "node": true
+    },
+    "plugins": [
+      "meteor"
+    ],
+    "globals": {
+        "cordova": true
+    },
+    "extends": [
+      "airbnb",
+      "plugin:meteor/recommended"
+    ],
+    "settings": {
+      "import/resolver": "meteor"
+    },
+    "rules": {
+      "indent": ["error", "tab"],
+      "no-tabs": ["error", { "allowIndentationTabs": true }],
+      "no-underscore-dangle": [
+        "error",
+        {
+          "allow": [
+            "_id",
+            "_schema",
+            "_execute"
+          ]
+        }
+      ],
+      "object-shorthand": [
+        "error",
+        "methods"
+      ],
+      "no-plusplus":["error", {"allowForLoopAfterthoughts": true}]
+    }
   }
 }
