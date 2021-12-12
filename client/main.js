@@ -122,7 +122,13 @@ export default class Bt {
 
 	// Calls the success callback when new data is available up to and including the delimiter
 	static async subscribe(delimiter, success, failure) {
-		cordova.exec(success, failure, PLUGIN_NAME, 'subscribe', [delimiter]);
+		if (window.cordova) {
+			cordova.exec(success, failure, PLUGIN_NAME, 'subscribe', [delimiter]);
+		} else {
+			// eslint-disable-next-line no-console
+			console.warn('Cordova not initalized. Method:', 'subscribe', 'args:', [delimiter]);
+		}
+		
 	}
 
 	// Removes data subscription
@@ -143,12 +149,22 @@ export default class Bt {
 			}
 			success(data);
 		}
-		cordova.exec(successWrapper, failure, PLUGIN_NAME, 'subscribeRaw', []);
+		if (window.cordova) {
+			cordova.exec(successWrapper, failure, PLUGIN_NAME, 'subscribeRaw', []);
+		} else {
+			// eslint-disable-next-line no-console
+			console.warn('Cordova not initalized. Method:', 'subscribeRaw', 'args:', []);
+		}
 	}
 
 	// Removes raw data subscription
 	static unsubscribeRawData(success, failure) {
-		cordova.exec(success, failure, PLUGIN_NAME, 'unsubscribeRaw', []);
+		if (window.cordova) {
+			cordova.exec(success, failure, PLUGIN_NAME, 'unsubscribeRaw', []);
+		} else {
+			// eslint-disable-next-line no-console
+			console.warn('Cordova not initalized. Method:', 'unsubscribeRaw', 'args:', []);
+		}
 	}
 
 	// Clears the data buffer
@@ -200,12 +216,22 @@ export default class Bt {
 			throw new Error('BluetoothSerial.setDeviceDiscoveredListener: notifyCallback not a function');
 		}
 
-		cordova.exec(notifyCallback, null, PLUGIN_NAME, 'setDeviceDiscoveredListener', []);
+		if (window.cordova) {
+			cordova.exec(notifyCallback, null, PLUGIN_NAME, 'setDeviceDiscoveredListener', []);
+		} else {
+			// eslint-disable-next-line no-console
+			console.warn('Cordova not initalized. Method:', 'setDeviceDiscoveredListener', 'args:', []);
+		}
 	}
 
 	// Unregister the discovery listener
 	static clearDeviceDiscoveredListener() {
-		cordova.exec(null, null, PLUGIN_NAME, 'clearDeviceDiscoveredListener', []);
+		if (window.cordova) {
+			cordova.exec(null, null, PLUGIN_NAME, 'clearDeviceDiscoveredListener', []);
+		} else {
+			// eslint-disable-next-line no-console
+			console.warn('Cordova not initalized. Method:', 'clearDeviceDiscoveredListener', 'args:', []);
+		}
 	}
 
 	// Sets the friendly Bluetooth name of the local Bluetooth adapter.
@@ -216,13 +242,23 @@ export default class Bt {
 	//
 	// https://developer.android.com/reference/android/bluetooth/BluetoothAdapter#setName(java.lang.String)
 	static setName(newName) {
-		cordova.exec(null, null, PLUGIN_NAME, 'setName', [newName]);
+		if (window.cordova) {
+			cordova.exec(null, null, PLUGIN_NAME, 'setName', [newName]);
+		} else {
+			// eslint-disable-next-line no-console
+			console.warn('Cordova not initalized. Method:', 'setName', 'args:', []);
+		}
 	}
 
 	// Make the device discoverable
 	// Max 300 seconds https://developer.android.com/reference/android/bluetooth/BluetoothAdapter#EXTRA_DISCOVERABLE_DURATION
 	static setDiscoverable(discoverableDurationSec) {
-		cordova.exec(null, null, PLUGIN_NAME, 'setDiscoverable', [discoverableDurationSec]);
+		if (window.cordova) {
+			cordova.exec(null, null, PLUGIN_NAME, 'setDiscoverable', [discoverableDurationSec]);
+		} else {
+			// eslint-disable-next-line no-console
+			console.warn('Cordova not initalized. Method:', 'setDiscoverable', 'args:', [discoverableDurationSec]);
+		}
 	}
 }
 window.Bt = Bt;

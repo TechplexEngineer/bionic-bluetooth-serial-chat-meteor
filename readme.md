@@ -40,5 +40,5 @@ List of devices attached
 R9JR808ES7J	device
 ```
 
-
+`meteor npm install`
 `meteor run android-device --mobile-server http://<host computer ip>:3000`

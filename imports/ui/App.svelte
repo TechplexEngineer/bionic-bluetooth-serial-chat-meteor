@@ -29,10 +29,26 @@
 
     e.target.message.value = "";
   }
-  (async ()=>{
-    $: isConnected = await Bt.isConnected()
-    $: console.log("connected:",isConnected)
-  })()
+  let isConnected = false;
+  let updatedConnectedHandle = null; // this is for polling, would be nice to have an event
+
+  const updateConectedFreqSec = 3;
+  async function updatedConnected() {
+    isConnected = await Bt.isConnected();
+
+    //@todo this doesn't seem to be working
+    updatedConnectedHandle = setTimeout(updatedConnected(), updateConectedFreqSec * 1000);
+  }
+  updatedConnected();
+
+  let pairedDevices = [];
+  let showConnectModal = false;
+
+  async function connectModal() {
+    // show spinner
+    let pairedDevices = await Bt.listPaired();
+    showConnectModal = true;
+  }
 
 </script>
 
@@ -64,9 +80,10 @@
 
         <div class="text-end">
           {#if isConnected == true}
-          <button type="button" class="btn btn-warning">Disconnect</button>
+          <button type="button" class="btn btn-warning" on:click={Bt.disconnect}>Disconnect</button>
           {:else}
-          <button type="button" class="btn btn-outline-light me-2">Connect</button>
+          <button type="button" class="btn btn-outline-light me-2" on:click={connectModal}>Connect</button>
+          <button type="button" class="btn btn-outline-light me-2" on:click={()=>{Bt.setDiscoverable(120)}}>Make Discoverable</button>
           {/if}
         </div>
       </div>
@@ -84,6 +101,24 @@
       <input type="text" class="form-control" name="message" id="message" placeholder="Message" >
       <button class="btn btn-primary" type="submit">Send</button>
     </form>
+  </div>
+
+  <div class="modal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Modal title</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>Modal body text goes here.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
